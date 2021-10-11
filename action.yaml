@@ -4,9 +4,6 @@ inputs:
   github_token:
     description: 'GitHub Access Token'
     required: true
-  github_app_token:
-    description: 'GitHub Access Token'
-    required: true
   working_directory:
     description: working directory
     required: false
@@ -14,11 +11,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: bash ${{ github.action_path }}/main.sh
-      working-directory: ${{ inputs.working_directory }}
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ inputs.github_token }}
-        GITHUB_APP_TOKEN: ${{ inputs.github_app_token }}
-        ROOT_DIR: ${{ github.workspace }}
-        WORKING_DIR: ${{ inputs.working_directory }}
+    - uses: suzuki-shunsuke/github-action-format@main
+      with:
+        github_token: ${{ inputs.github_token }}
+        working_directory: ${{ inputs.working_directory }}
+        command: terraform fmt -recursive | sed "s|^|${{ inputs.working_directory }}/|"
+        commit_message: "style: terraform fmt -recursive"
