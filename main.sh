@@ -8,7 +8,7 @@ if terraform fmt -check -recursive > /dev/null 2>&1; then
 fi
 
 tempfile=$(mktemp)
-github-comment exec -- terraform fmt -recursive | sed "s|^|$WORKING_DIR|" > "$tempfile"
+github-comment exec -- terraform fmt -recursive | sed "s|^|$WORKING_DIR/|" > "$tempfile"
 # shellcheck disable=SC2046
 github-comment exec -- \
   ghcp commit -r "$GITHUB_REPOSITORY" -b "$GITHUB_HEAD_REF" \
