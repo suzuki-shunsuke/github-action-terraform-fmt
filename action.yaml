@@ -3,7 +3,8 @@ description: terraform fmt
 inputs:
   github_token:
     description: 'GitHub Access Token'
-    required: true
+    required: false
+    default: ${{ github.token }}
   working_directory:
     description: working directory
     required: false
