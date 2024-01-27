@@ -16,7 +16,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: suzuki-shunsuke/github-action-format@main
+    - uses: suzuki-shunsuke/github-action-format@7afa92031ddd24c88bd8f6dd2b1c3649c9f5612a # v0.2.0
       with:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
