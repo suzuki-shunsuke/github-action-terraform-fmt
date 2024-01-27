@@ -13,13 +13,18 @@ inputs:
     required: false
     description: If "true", this action skips pushing a commit
     default: false
+  branch:
+    required: false
+    description: branch where a commit is pushed
+    default: ""
 runs:
   using: composite
   steps:
-    - uses: suzuki-shunsuke/github-action-format@7afa92031ddd24c88bd8f6dd2b1c3649c9f5612a # v0.2.0
+    - uses: suzuki-shunsuke/github-action-format@c4e0196c3f052afb787cdca2056656c42d769bf9 # v0.2.1
       with:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
         command: terraform fmt -recursive | sed "s|^|${{ inputs.working_directory }}/|"
         commit_message: "style: terraform fmt -recursive"
         skip_push: ${{ inputs.skip_push }}
+        branch: ${{ inputs.branch }}
