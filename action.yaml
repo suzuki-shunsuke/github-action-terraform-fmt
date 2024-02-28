@@ -12,11 +12,15 @@ inputs:
   skip_push:
     required: false
     description: If "true", this action skips pushing a commit
-    default: false
+    default: "false"
   branch:
     required: false
     description: branch where a commit is pushed
     default: ""
+  terraform_command:
+    required: false
+    description: You can execute a tool such as OpenTofu instead of Terraform
+    default: terraform
 runs:
   using: composite
   steps:
@@ -24,7 +28,8 @@ runs:
       with:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
-        command: terraform fmt -recursive | sed "s|^|${{ inputs.working_directory }}/|"
-        commit_message: "style: terraform fmt -recursive"
+        command: |
+          "${{inputs.terraform_command}}" fmt -recursive | sed "s|^|${{ inputs.working_directory }}/|"
+        commit_message: "style: ${{inputs.terraform_command}} fmt -recursive"
         skip_push: ${{ inputs.skip_push }}
         branch: ${{ inputs.branch }}
